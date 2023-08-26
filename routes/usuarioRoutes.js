@@ -4,12 +4,10 @@ const router = express.Router();
 
 // Routing
 
-router.get('/', function(req, res) {
-    res.send('Hola Mundo en express')
-});
-
-router.post('/', function(req, res) {
-    res.json({msg: "Node JSON"})
+router.get('/login', function(req, res) {
+    res.render('auth/login', {
+        autenticado: true
+    })
 });
 
 
