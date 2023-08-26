@@ -1,0 +1,26 @@
+{
+  "name": "bienesraices",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  },
+  "keywords": [
+    "MVC",
+    "Pug",
+    "Tailwindcss",
+    "MySQL",
+    "Sequalize"
+  ],
+  "author": "J. Alexis TH",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
