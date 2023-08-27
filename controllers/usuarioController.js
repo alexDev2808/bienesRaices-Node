@@ -54,7 +54,14 @@ const registrar = async (req, res) => {
         })
     }
 
-    return;
+    // Almacenar un usuario
+    await Usuario.create({
+        nombre,
+        email,
+        password,
+        token: 13245,
+        
+    })
 }
 
 const formularioOlvidePassword = (req, res) => {
