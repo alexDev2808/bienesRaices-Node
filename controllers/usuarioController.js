@@ -1,6 +1,7 @@
 import { check, validationResult } from 'express-validator';
 import Usuario from '../models/Usuario.js';
 import { generarId } from '../helpers/tokens.js';
+import { emailRegistro } from '../helpers/emails.js';
 
 const formularioLogin = (req, res) => {
     res.render('auth/login', {
@@ -20,7 +21,7 @@ const registrar = async (req, res) => {
     await check('nombre').notEmpty().withMessage("El nombre no puede estar vacio").run(req)
     await check('email').isEmail().withMessage("Eso no parece un email").run(req)
     await check('password').isLength({min: 6}).withMessage("La contrasena debe tener al menos 6 caracteres").run(req)
-    await check('repetir_password').equals('password').withMessage("Las contrasenas no coinciden").run(req)
+    await check('repetir_password').equals(req.body.password).withMessage("Las contrasenas no coinciden").run(req)
 
 
     let resultado = validationResult(req)
@@ -56,13 +57,44 @@ const registrar = async (req, res) => {
     }
 
     // Almacenar un usuario
-    await Usuario.create({
+    const usuario = await Usuario.create({
         nombre,
         email,
         password,
         token: generarId(),
 
     })
+
+    // Envia email de confirmacion
+
+    emailRegistro({
+        nombre: usuario.nombre,
+        email: usuario.email,
+        token: usuario.token
+    })
+
+    // Mostrar mensaje de confirmacion
+
+    res.render('templates/mensaje', {
+        pagina: 'Cuenta creada correctamente',
+        mensaje: 'Hemos enviado un Email de confirmacion a tu cuenta, presiona el enlace'
+    })
+
+
+
+}
+
+// Funcion que comprueba una cuenta
+
+const confirmar = (req, res) => {
+    const { token } = req.params;
+
+    console.log(token);
+
+    // Verificar si el token es valido
+
+    // Confirmar la cuenta
+
 }
 
 const formularioOlvidePassword = (req, res) => {
@@ -75,5 +107,6 @@ export {
     formularioLogin,
     formularioRegistro,
     registrar,
+    confirmar,
     formularioOlvidePassword
 }
