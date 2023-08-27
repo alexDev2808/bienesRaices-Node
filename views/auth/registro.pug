@@ -16,11 +16,11 @@ block contenido
                 form.space-y-5(method="POST" action="/auth/registro")
                     div
                         label(class="block text-sm uppercase text-gray-500 mb-2 font-bold")(for="nombre") Tu nombre
-                        input#nombre(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")(placeholder="Tu nombre" type="text" name="nombre")
+                        input#nombre(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")(placeholder="Tu nombre" type="text" name="nombre" value= usuario ? usuario.nombre : '')
 
                     div
                         label(class="block text-sm uppercase text-gray-500 mb-2 font-bold")(for="email") Tu Email
-                        input#email(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")(placeholder="Tu Email" type="email" name="email")
+                        input#email(class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400")(placeholder="Tu Email" type="email" name="email" value= usuario ? usuario.email : '') 
                     
                     div
                         label(class="block text-sm uppercase text-gray-500 mb-2 font-bold")(for="password") Tu Password
