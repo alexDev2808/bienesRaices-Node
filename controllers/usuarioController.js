@@ -118,14 +118,37 @@ const confirmar = async (req, res) => {
 
 const formularioOlvidePassword = (req, res) => {
     res.render('auth/olvide-password', {
-        pagina: "Recuperar acceso"
+        pagina: "Recuperar acceso",
+        csrfToken: req.csrfToken(),
+
     })
 };
+
+const resetPassword = async (req, res) => {
+    // Validacion
+    await check('email').isEmail().withMessage("Eso no parece un email").run(req)
+
+    let resultado = validationResult(req)
+    
+    // Verificar que el resultado este vacio
+    if (!resultado.isEmpty()) {
+        return res.render('auth/olvide-password', {
+            pagina: "Recuperar acceso",
+            csrfToken: req.csrfToken(),
+            errores: resultado.array()
+        })
+    }
+
+    // Buscar usuario
+    
+}
+
 
 export {
     formularioLogin,
     formularioRegistro,
     registrar,
     confirmar,
-    formularioOlvidePassword
+    formularioOlvidePassword,
+    resetPassword
 }
