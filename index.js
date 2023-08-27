@@ -10,7 +10,8 @@ app.use( express.urlencoded({extended: true}) )
 
 // Conexion a la db
 try {
-    await db.authenticate()
+    await db.authenticate();
+    db.sync()
     console.log("Conexion correcta a la base de datos");
 } catch(error) {
     console.log(error);
