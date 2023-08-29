@@ -6,10 +6,29 @@ import { emailRegistro, emailOlvidePassword } from '../helpers/emails.js';
 
 const formularioLogin = (req, res) => {
     res.render('auth/login', {
-        pagina: "Iniciar Sesion"
+        pagina: "Iniciar Sesion",
+        csrfToken: req.csrfToken(),
         
     })
 };
+
+const autenticar = async (req,res) => {
+    // Validar
+    await check('email').isEmail().withMessage("El email es obligatorio").run(req)
+    await check('password').notEmpty().withMessage("La contrasena es obligatoria").run(req)
+
+    let resultado = validationResult(req)
+
+    
+    // Verificar que el resultado este vacio
+    if (!resultado.isEmpty()) {
+        return res.render('auth/login', {
+            pagina: 'Iniciar Sesion',
+            csrfToken: req.csrfToken(),
+            errores: resultado.array()
+        })
+    }
+}
 
 const formularioRegistro = (req, res) => {
     res.render('auth/registro', {
@@ -230,11 +249,12 @@ const nuevoPassword = async (req, res) => {
 
 export {
     formularioLogin,
+    autenticar,
     formularioRegistro,
     registrar,
     confirmar,
     formularioOlvidePassword,
     resetPassword,
     comprobarToken,
-    nuevoPassword
+    nuevoPassword,
 }

@@ -7,7 +7,8 @@ import {
   formularioOlvidePassword,
   resetPassword,
   comprobarToken,
-  nuevoPassword
+  nuevoPassword,
+  autenticar
 } from "../controllers/usuarioController.js";
 
 const router = express.Router();
@@ -15,6 +16,7 @@ const router = express.Router();
 // Routing
 
 router.get("/login", formularioLogin);
+router.post("/login", autenticar);
 router.get("/registro", formularioRegistro);
 router.post("/registro", registrar);
 
