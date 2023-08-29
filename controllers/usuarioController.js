@@ -1,7 +1,7 @@
 import { check, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import Usuario from '../models/Usuario.js';
-import { generarId } from '../helpers/tokens.js';
+import { generarJWT, generarId } from '../helpers/tokens.js';
 import { emailRegistro, emailOlvidePassword } from '../helpers/emails.js';
 
 const formularioLogin = (req, res) => {
@@ -61,7 +61,15 @@ const autenticar = async (req,res) => {
     }
 
     // Autenticar usuario
+    const token = generarJWT({id: usuario.id, nombre: usuario.nombre})
 
+
+    // Almacenar en un cookie
+    return res.cookie('_token', token, {
+        httpOnly: true,
+        // secure: true, // deploy
+
+    }).redirect('/mis-propiedades')
 
 }
 
